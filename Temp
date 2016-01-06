@@ -1,0 +1,64 @@
+'''
+Created on Dec 28, 2015
+
+@author: Nihal
+'''
+
+import urllib.request
+from lxml import html
+import cssselect
+
+'''
+Method to extract source code from a URL.
+
+@Parameter - URL
+@Returns - Source code as a String (to-parse)
+'''
+def extractSource(url):
+
+    headers = {}
+    headers['User-Agent'] = 'Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.27 Safari/537.17'
+    
+    req = urllib.request.Request(url, headers = headers)
+    response = urllib.request.urlopen(req)
+    
+    to_parse = response.read()
+    print(to_parse)
+     
+    return to_parse
+
+
+'''
+Method to parse text from source code.
+
+@Parameter - Source code as a String (to_parse)
+@Returns - Text from the input URL as a String (parsed)
+'''
+def parseText(to_parse):    
+    
+    element = html.fromstring(to_parse)
+    '''
+    for el in parsed.cssselect("div.featured a"):           
+        print(el)
+    
+    el = parsed.cssselect("div#footer_inner strong")[0]           
+    print (el)
+    
+    print (el.text)
+    '''
+    
+    return parsed
+
+'''
+Main Method - Calls functions. Will be redone when designing interface.
+Also used for testing the parser.
+'''
+def main():
+    
+    url = 'http://www.foxnews.com/us/2016/01/05/ripe-for-radicalization-federal-prisons-breeding-ground-for-terrorists-say-experts.html?intcmp=hpbt1'
+    
+    to_parse = extractSource(url)
+    parseText(to_parse)
+
+if __name__ == '__main__' :
+    main()
